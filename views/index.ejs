@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accu-Weather</title>
+  <link rel="icon" href="./images/title.png" type="image/icon type">
+  <link rel="stylesheet" href="../stylesheets/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+<div id="main">
+  <%if(weather !== null){%>
+    <%if(Mainweather === "Haze"){%>
+      <img class="mainimg" src="http://ichef.bbci.co.uk/news/976/cpsprodpb/1245A/production/_87524847_87524845.jpg" alt="">
+   <% } else if (Mainweather=== "Clear"){ %>
+    <img class="mainimg" src="./images/clearskymain.webp" alt="">
+   <%}else if(Mainweather === "Clouds"){%>
+    <img class="mainimg" src="./images/clearskymain.webp" alt="">
+   <%}else if(Mainweather === "light rain"){%>
+    <img class="mainimg" src="./images/rainy.jpg" alt="">
+  <% }else if(Mainweather === "overcast clouds"){%>
+    <img class="mainimg" src="./images/clouds.jpg" alt="">
+  <%}else{ %>  
+    <img class="mainimg" src="http://ichef.bbci.co.uk/news/976/cpsprodpb/1245A/production/_87524847_87524845.jpg" alt="">
+  <% } %>
+  <%}else{%>
+    <img id="homepageimg" src="./images/maincloud.png" >
+    <h1 id="lst">Enter Your Location to know Your Weather....</h1>
+  <%}%>
+
+  <div id="left">
+    <div id="sml">
+      <%if( weather!== null){ %>
+        <div class="temp">
+          <span>
+        <%= temp %>°
+      </span>
+    </div>
+    <br>
+    <div class="scnd">
+      <div class="weatherdesc">
+     <span id="span1"> <%= place %></span>
+      <br>
+     <Span id="span2"> <%= timezone %></Span>
+    </div>
+     <div class="weathertype">
+       <span id="weathertype"> <%if(weatherDescription === "haze"){%>
+        <img id="img" src="./images/haz.png">
+        <br>
+        <%=weatherDescription%>
+    <% } else if(weatherDescription === "clear sky"){ %>
+      <img id="img" src="./images/clearskyicon.webp">
+        <br>
+        <%=weatherDescription%>
+    <% }else if(weatherDescription === "few clouds"){%>
+    <img id="img" src="./images/clearskyicon.webp">
+        <br>
+        <%=weatherDescription%>
+  <% }else if(weatherDescription === "light rain"){%>
+    <img id="img" src="./images/rainicn.jpg">
+        <br>
+        <%=weatherDescription%>
+  <%}else{%>
+    <img id="img" src="./images/clearskyicon.webp">
+    <%=weatherDescription%>
+  <%}%> </span>
+     </div>
+      <% } %>
+    </div>
+    </div>
+  </div>
+  <div id="right">
+    <form id="form" action="/city" method="post">
+      <input name="city" type="text" class="input" placeholder="Enter a City" required>
+      <button type="submit"><i class="ri-search-line"></i></button>
+    </form> 
+    <div id="details">
+      <div id="leftpart">
+        <%if(weather !== null){%>
+        <h3>Name</h3>
+        <h3>speed</h3>
+        <h3>Clouds</h3>
+        <h3>Humidity</h3>
+        <h3>Visibility</h3>
+        <h3>Description</h3>
+        <%}%>
+      </div>
+      <div id="rightpart">
+        <%if(weather !== null){%>
+
+          <h3><%= place %></h3>
+          <h3><%= speed %>km/h</h3>
+          <h3><%= clouds %>%</h3>
+          <h3><%= humidity %>%</h3>
+          <h3><%= visibility %></h3>
+          <h3><%= weatherDescription %></h3>
+        <%}%>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+
+// var MainImg = document.getElementById("homepageimg");
+// var moving = false;
+
+// MainImg.addEventListener("mousedown", initialClick, false);
+
+// function move(e){
+
+//   var newX = e.clientX - 10;
+//   var newY = e.clientY - 10;
+
+//   MainImg.style.left = newX + "px";
+//   MainImg.style.top = newY + "px";
+
+  
+// }
+
+// function initialClick(e) {
+
+//   if(moving){
+//     document.removeEventListener("mousemove", move);
+//     moving = !moving;
+//     return;
+//   }
+  
+//   moving = !moving;
+//   MainImg = this;
+
+//   document.addEventListener("mousemove", move, false);
+
+// }
+
+  function addListeners() {
+    document.getElementById('homepageimg').addEventListener('mousedown', mouseDown, false);
+    window.addEventListener('mouseup', mouseUp, false);
+}
+
+function mouseUp() {
+    window.removeEventListener('mousemove', divMove, true);
+}
+
+function mouseDown() {
+    window.addEventListener('mousemove', divMove, true);
+}
+
+function divMove(e){
+    var div = document.getElementById('homepageimg');
+    div.style.position = 'absolute';
+    div.style.top = e.clientY + 'px';
+    div.style.left = e.clientX + 'px';
+}
+
+
+addListeners();
+
+</script>
+</html>
